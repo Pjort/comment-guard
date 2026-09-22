@@ -8,10 +8,15 @@
   "plugins": [
     {
       "name": "comment-guard",
+      "displayName": "Comment Guard",
       "description": "Lists every comment line that lands in your working tree -- from an edit, a heredoc, a sed -i, or a git merge -- at the one moment when cutting it is still cheap, and hands back a four-part rule for deciding. Watches markdown too, where the signal is not the lines but the shape: prose that narrates the change, growth that replaced nothing, a file already too long to read.",
       "author": {
-        "name": "pjort"
+        "name": "pjort",
+        "url": "https://github.com/Pjort"
       },
+      "homepage": "https://github.com/Pjort/comment-guard",
+      "repository": "https://github.com/Pjort/comment-guard",
+      "license": "MIT",
       "category": "development",
       "source": "./plugins/comment-guard"
     }

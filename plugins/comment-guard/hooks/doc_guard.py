@@ -257,7 +257,7 @@ def measure_file(path):
     try:
         if os.path.getsize(path) > MAX_DOC_BYTES:
             return 0, 0
-        with open(path, errors="replace") as handle:
+        with open(path, encoding="utf-8", errors="replace") as handle:
             return measure(handle.read())
     except Exception:
         return 0, 0

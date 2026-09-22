@@ -25,6 +25,10 @@ Claude Code clones with your own git credentials, so if you can clone the repo
 by hand you can add it. The SSH remote works just as well:
 `git@github.com:Pjort/comment-guard.git`.
 
+Both hooks run as `python3` scripts, so that has to be on the PATH. macOS and
+Linux ship it; on Windows, a python.org install with the `python3` app
+execution alias enabled provides it.
+
 Restart the session so `SessionStart` fires. Nothing else to configure.
 
 ## Update
@@ -51,7 +55,7 @@ pushing it, add the checkout as a marketplace of its own:
 
 ```
 claude plugin marketplace remove comment-guard
-claude plugin marketplace add ~/dev/comment-guard
+claude plugin marketplace add ~/src/comment-guard
 ```
 
 A path source copies the working tree, so a change does not have to be
@@ -142,7 +146,7 @@ checkouts watches both.
 ## What counts as a comment
 
 Line comments, block comments, and docstrings, in 25 comment syntaxes covering
-170 extensions and bare filenames:
+171 extensions and bare filenames:
 
 | Spelling | Languages |
 | --- | --- |

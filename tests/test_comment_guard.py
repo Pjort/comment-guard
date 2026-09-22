@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import time
 import unittest
 
 HOOK = os.path.join(
@@ -561,6 +562,25 @@ class StateHandling(HookCase):
         self.assertEqual(self.bash(), ["# landed"])
         self.session = "a-different-session"
         self.assertEqual(self.bash(), [])
+
+    def test_pruning_removes_only_the_state_files_it_owns(self):
+        """The state dir can be pointed anywhere; nothing else is its business."""
+        old = time.time() - 8 * 86400
+        foreign = os.path.join(self.state, "notes.txt")
+        with open(foreign, "w") as handle:
+            handle.write("belongs to someone else")
+        os.utime(foreign, (old, old))
+        stale = os.path.join(self.state, "comments-deadbeefdeadbeef.json")
+        with open(stale, "w") as handle:
+            handle.write("{}")
+        os.utime(stale, (old, old))
+
+        self.write("a.py", "x = 1\n")
+        self.commit()
+        self.session_start()
+
+        self.assertTrue(os.path.exists(foreign))
+        self.assertFalse(os.path.exists(stale))
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ plumbing; the file each one writes is its own.
 import hashlib
 import json
 import os
+import re
 import subprocess
 import time
 
@@ -17,6 +18,11 @@ STATE_DIR = os.environ.get("COMMENT_GUARD_STATE_DIR") or os.path.expanduser(
 )
 STATE_TTL_DAYS = 7
 MAX_FILE_BYTES = 200_000
+
+# The directory can be pointed anywhere, so pruning touches only the files
+# these hooks write: <kind>-<16 hex chars>.json. Nothing else in it, however
+# old, is ever removed.
+STATE_FILE = re.compile(r"^(?:comments|docs)-[0-9a-f]{16}\.json$")
 
 
 def git(cwd, *args):
@@ -39,7 +45,7 @@ def read_text(path):
     try:
         if os.path.getsize(path) > MAX_FILE_BYTES:
             return ""
-        with open(path, errors="replace") as handle:
+        with open(path, encoding="utf-8", errors="replace") as handle:
             return handle.read()
     except Exception:
         return ""
@@ -56,7 +62,7 @@ def prune_old_state():
     try:
         for name in os.listdir(STATE_DIR):
             path = os.path.join(STATE_DIR, name)
-            if os.path.getmtime(path) < cutoff:
+            if STATE_FILE.match(name) and os.path.getmtime(path) < cutoff:
                 os.remove(path)
     except Exception:
         pass
