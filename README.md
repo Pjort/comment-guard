@@ -18,7 +18,7 @@ now claim to be true.
 
 ```
 /plugin marketplace add https://github.com/Pjort/comment-guard
-/plugin install comment-guard@claude-comment-guard
+/plugin install comment-guard@comment-guard
 ```
 
 Claude Code clones with your own git credentials, so if you can clone the repo
@@ -30,8 +30,8 @@ Restart the session so `SessionStart` fires. Nothing else to configure.
 ## Update
 
 ```
-claude plugin marketplace update claude-comment-guard
-claude plugin update comment-guard@claude-comment-guard
+claude plugin marketplace update comment-guard
+claude plugin update comment-guard@comment-guard
 ```
 
 The first fetches the repo. The second compares version numbers rather than
@@ -50,8 +50,8 @@ to it, so editing a checkout changes nothing on its own. To try a change before
 pushing it, add the checkout as a marketplace of its own:
 
 ```
-claude plugin marketplace remove claude-comment-guard
-claude plugin marketplace add ~/dev/claude-comment-guard
+claude plugin marketplace remove comment-guard
+claude plugin marketplace add ~/dev/comment-guard
 ```
 
 A path source copies the working tree, so a change does not have to be
@@ -62,13 +62,13 @@ anything to do. Both sources carry the same marketplace name, hence the
 ## Uninstall
 
 ```
-claude plugin uninstall comment-guard@claude-comment-guard
-claude plugin marketplace remove claude-comment-guard
+claude plugin uninstall comment-guard@comment-guard
+claude plugin marketplace remove comment-guard
 ```
 
 The first takes the hooks out, the second forgets the marketplace. To stop them
 without giving up the install, `claude plugin disable
-comment-guard@claude-comment-guard`.
+comment-guard@comment-guard`.
 
 Session state under `~/.claude/comment-guard/state/` is not the plugin's data
 directory and survives all three. Delete it by hand, or leave it to the 7-day

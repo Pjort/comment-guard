@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "claude-comment-guard",
+  "name": "comment-guard",
   "description": "A single-plugin marketplace for comment-guard, a hook that surfaces newly landed comment lines and newly bloated markdown for review.",
   "owner": {
     "name": "pjort"
